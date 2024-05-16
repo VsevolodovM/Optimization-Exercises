@@ -113,5 +113,23 @@ def bazaraa():
     print('x_n =', x)
 
 
+print("\nTest Armijo")
+test_armijo()
+
+
+
+# print("Test Armijo_2")
+# test_armijo_2()
+
+
+print("\nRosenbrock")
+rosenbrock()
+
+print("\nhimmelblau")
+himmelblau()
+
+print("\nbazaraa")
+bazaraa()
+
 
 bazaraa()
