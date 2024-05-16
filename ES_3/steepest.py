@@ -1,23 +1,24 @@
 from armijo import *
 from numpy import linalg as LA
 
-def steepest(funct:types.FunctionType, gradient:np.array, xinit:np.array, gamma:float, beta:float, epsilon:float, maxit:int):  #Algo 8.1(Geiger)
+def steepestdescent(funct:types.FunctionType, gradient, xinit:np.array, tol:float, maxit:int):
     """This function is an implementation of Steepest Descent method"""
-    case = 0
+    beta = 0.5
+    gamma = 10 ** (-2)
     k = 0
     x_k = xinit
     s_k = np.zeros_like(xinit)
     sigma_k = 0
 
-    while LA.norm(gip(gradient, x_k)) > epsilon and k < maxit:
-        s_k = -gip(gradient, x_k) / LA.norm(gip(gradient, x_k))
+    while LA.norm(gradient(x_k)) > tol and k < maxit:
+        s_k = -gradient(x_k) 
 
-        sigma_k = armijo(funct, x_k, s_k, gradient, gamma, beta)
+        sigma_k = armijo(funct,gradient, beta, gamma,  x_k, s_k)
 
         x_k = x_k + sigma_k * s_k
         k += 1
 
-    if LA.norm(gip(gradient, x_k)) <= epsilon:
-        return [x_k, 0]
+    if LA.norm(gradient(x_k)) <= tol:
+        return [k, x_k]
     elif k >= maxit:
-        return [x_k, 1]
+        return [k, x_k]
